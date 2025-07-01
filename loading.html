@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loading...</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #0d0d0d;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #preloader {
+      text-align: center;
+    }
+
+    .progress-container {
+      width: 300px;
+      height: 15px;
+      background-color: #333;
+      border-radius: 30px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ffffff, #888);
+      transition: width 0.2s ease;
+    }
+
+    .progress-text {
+      font-size: 18px;
+      color: #fff;
+    }
+
+    #content {
+      display: none;
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="preloader">
+    <div class="progress-container">
+      <div class="progress-bar" id="bar"></div>
+    </div>
+    <div class="progress-text" id="percent">0%</div>
+  </div>
+
+  <div id="content">
+    <h1>Hi bruh</h1>
+    <p>este é o apocalypse dos web bugs</p>
+  </div>
+
+  <script>
+    let progress = 0;
+    const bar = document.getElementById('bar');
+    const percent = document.getElementById('percent');
+    const content = document.getElementById('content');
+    const preloader = document.getElementById('preloader');
+
+    const interval = setInterval(() => {
+      progress++;
+      bar.style.width = progress + '%';
+      percent.innerText = progress + '%';
+
+      if (progress >= 100) {
+        clearInterval(interval);
+        preloader.style.display = 'none';
+        content.style.display = 'block';
+
+        // Tunda 3 detik, lalu animasi keluar dan redirect
+        setTimeout(() => {
+          document.body.classList.add('fade-out');
+          setTimeout(() => {
+            window.location.href = "awal.html";
+          }, 1000); // waktu animasi keluar
+        }, 3000); // waktu tunggu setelah konten tampil
+      }
+    }, 50); // total waktu loading: 5 detik
+  </script>
+
+</body>
+</html>
